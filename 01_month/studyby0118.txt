@@ -76,3 +76,71 @@ fgets()  fgets()  fclose()  feof()
 
 c预处理器
 #define XXX XXX
+
+c头文件：
+只引用一次头文件：为了防止一个头文件被引用两次，标准做法是把整个内容放在条件编译中
+#ifndef HEADER_FILE
+#define HEADER_FILE
+#include "header.h"
+#endif
+
+有条件引用
+#if SYSTEM1
+	#include "system1.h"
+#elif SYSTEM2
+	#include "system2.h"
+#elif SYSTEM3
+	#include "system3.h"
+...
+#endif
+
+c强制类型转换
+c错误处理
+c递归
+
+c可变参数
+#include <stdio.h>
+#include <stdarg.h>
+
+void myPrintf(int num, ...)
+{
+	int i = 0;
+	va_list valist;
+	va_start(valist, num);
+	for(i = 0; i < num; i++) {
+		printf("%s\n", va_arg(valist, char*));
+	}
+	va_end(va_list);
+}
+
+double average(int num, ...)
+{
+	int i = 0;
+	va_list valist;
+	double sum = 0.0;	
+	va_start(valist, num);
+	for(i = 0; i < num; i++) {
+		sum += va_arg(valist, int);
+	}
+	va_end(va_list);
+	return sum / num;
+}
+
+int main()
+{
+	myPrintf(4, "aa", "bb", "cc", "dd");
+	printf("Avarage of 2, 3, 4, 5 = %f\n", average(4, 2, 3, 4, 5));
+	return 0;
+}
+
+c内存管理：
+void *malloc(int num)；
+void *realloc(void *address, int newsize);//重新分配内存，把内存扩展到newsize
+void free(void *address);
+
+c命令行参数
+argc是指传入参数的个数
+argv[]是一个指针数组，指向传递给程序的每个参数
+
+
+

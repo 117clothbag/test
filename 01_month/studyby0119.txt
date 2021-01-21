@@ -51,4 +51,6 @@ cal 2021 显示2021年日历
 
 cat /etc/hostname 显示主机名
 ubuntu
+cat /etc/redhat-release [系统版本]
+cat /etc/os-release [操作系统的识别数据]
 
