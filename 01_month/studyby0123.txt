@@ -1,0 +1,32 @@
+【vector】
+访问和操作vector元素
+for(int i = 0; i < v1.size(); i++) {
+	cout << v1[i] << endl;
+	v1[i] = 100;
+	cout << v1[i] << endl;
+}
+
+[后续理解下]注意：虽然vector对象可以动态增长，但是也会有一点副作用，一直的一个限制就是不能再范围for循环中向vector对象添加元素。另一个限制就是任何一种可能改变vector对象容量的操作，不如push_back，都会使该迭代器失效。
+总而言之就是：但凡使用了迭代器的循环体，都不要向迭代器所属的容器添加元素！
+
+【set】
+set和vector差不多，它跟vector的唯一区别就是，set里面的元素是有序，且是唯一的，只要你往set里面添加元素，他就会自动排序，而且如果你添加的元素set里面本来就存在，那么这次操作就不执行。要想用set先加入头文件 [#include <set>]
+
+#include<iostream>
+#include<set>
+using namespace std;
+int main(){
+    set<int> myset;
+    myset.insert(4);
+    myset.insert(7);
+    myset.insert(2);
+    myset.insert(0);
+    myset.insert(4);
+    set<int>::iterator it;
+    for(it = myset.begin(); it != myset.end(); it++){
+        cout<< *it;   //输出结果是：0247
+    }
+}
+
+
+

@@ -47,7 +47,7 @@ void Swap(T &x, T &y, M str)
 	T tmp = x;
 	x = y;
 	y = tmp;
-	std::cout << "str = " << str << str::endl;
+	std::cout << "str = " << str << std::endl;
 }
 
 int main()
@@ -141,13 +141,3 @@ vector<int> v10(4); //默认初始化为空字符串
 for(i = 0; i < 20; i++) {
 	v1.push_back(i);
 }
-
-
-
-
-
-
-
-
-
-
