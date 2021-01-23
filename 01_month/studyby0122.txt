@@ -1,0 +1,153 @@
+文件读写操作：
+#include <iostream>
+#include <fstream>
+
+int main()
+{
+	//文件写操作
+	std::string str = "1.txt";
+	std::ofstream file(str, std::ios::out | std::ios::app);
+	if(!file.is_open()) {
+		std::cout << "Fail to open file" << std::endl;
+		return 1;
+	}
+	file << "china\n" ;
+
+	file.close();
+	
+	//文件读操作
+	char bufer[256] = "";
+	std::string str1 = "1.txt";
+	std::ifstream file1(str);
+	if(!file1.is_open()) {
+		std::cout << "Error open dile." << std::endl;
+		exit(1);
+	}
+	
+	while(!file1.eof()) {
+		file1.getline(buffer, 256);
+		std::cout << buffer << std::endl;
+	}
+	
+	file1.close();
+	return 0;
+}
+
+函数模板：[其中class可以用typename替换]
+template <class 类型参数1， class 类型参数2, ...>
+返回值类型 模板名称(形参列表)
+{
+	函数体
+}
+
+#include <iostream>
+template <typename T, typename Y>
+void Swap(T &x, T &y, M str)
+{
+	T tmp = x;
+	x = y;
+	y = tmp;
+	std::cout << "str = " << str << str::endl;
+}
+
+int main()
+{
+	int x = 5;
+	int y = 6;
+	chat str[] = "hello";
+	
+	Swap(x, y, str);
+	
+	std::cout << x << std::endl;
+	std::cout << y << std::endl;
+	
+
+	double x1 = 5.0;
+	double y1 = 6.0;
+	
+	Swap(x1, y1, str);
+	
+	std::cout << x1 << std::endl;
+	std::cout << y1 << std::endl;
+	
+	return 0;
+}
+
+类模板：
+
+template <typename T>
+class A
+{
+	public:
+		A(T t) {
+			this->t = t;			
+		}
+	
+		T &getT() {
+			return t			
+		}
+	public:
+		T t;
+};
+
+int main()
+{
+	A<int> a(100); // 注意类模板的调用模型
+	a.getT();
+	
+	return 0;
+}
+
+STL入门提高：
+【string】
+string s1; // 初始化字符串，空字符串
+string s2; // 拷贝初始化，深拷贝字符串
+string s3 = "hello world"; // 直接初始化，s3存储了字符串
+string s4(10, 'a'); // s4存的字符串是aaaaaaaaaa
+string s5(s4); // 拷贝初始化，深拷贝字符串
+string s6("hello world"); // 直接初始化
+string s7 = string(6, 'c'); //拷贝初始化， cccccc
+
+当把string对象的字符面值以及字符串面值混在一条语句中使用时，必须确保+号的两侧的运算对象至少有一个是string
+string s1 = s2 + ",";
+
+处理string中的字符串的每个字符
+访问字符串的每个字符；
+for(int i = 0; i < s3.size(); i++) {
+	cout << s3[i] << endl;
+	s3[i] = 's';
+} 
+
+也可以通过迭代器来访问容器元素：
+string str("hi world");
+for(string::iterator it = str.begin(); it != str.end(); it++) {
+	cout << *it << endl;
+}
+
+【vector】
+vector 好比是c语言中的数组，但是vector又具有数组没有的一些高级功能
+vector<int> v1;
+vector<father> v2;
+vector<string> v3;
+vector<vector<int> >; //注意空格。这里相当于二维数组 int a[n][n];
+vector<int> v5 = {1, 2 , 3, 4, 5}; // 列表初始化，注意使用得是花括号
+vector<string> v6 = {"hi", "my", "name", "is", "lee"};
+vector<int> v7(5, -1); // 初始化为-1 -1 -1 -1 -1.第一个参数是数目，第二个参数是要初始化的值
+vector<string> v8(3, "hi"); 
+vector<int> v9(10); // 默认初始化为0
+vector<int> v10(4); //默认初始化为空字符串
+
+使用push_back加入元素
+for(i = 0; i < 20; i++) {
+	v1.push_back(i);
+}
+
+
+
+
+
+
+
+
+
+
