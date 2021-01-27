@@ -1,0 +1,38 @@
+数据结构基础概念篇
+线性表 栈 队列 串 数组 广义表 树 二叉树 哈弗曼树/霍夫曼树 图 哈希表 排序
+
+linux的文件I/O操作
+打开文件
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
+int open(const char *pathname, int flags);
+失败 -1
+
+O_RDONLY:只读打开
+O_WRONLY:只写打开
+O_RDWR:读写打开
+O_CREAT:若此文件不存在则创建他，使用O_CREAT时后面要跟文件的访问权限位，如O_CREAT,0777
+O_APPEND:每次写时都追加到文件的尾端
+O_EXCL：如果同时指定了O_CREAT,而文件已经存在则出错，用此可以测试一个文件是否存在，如果不存在，则创建此文件，这使测试和创建两者成为一个原子操作
+O_DSYNC:使每次write等待物理I/O操作完成，但是如果该写操作并不影响读取刚写入的数据，则不需要等待文件属性被更新
+O_NONBLOCK:如果path引用的是一个FIFO、一个特殊文件或者一个字符特殊文件，则此选项为文件的本次打开操作和后续的I/O操作设置非阻塞方式
+O_NOCTTY：如果path引用得是终端设备，则将该设备分配为此进程的控制终端
+O_SYNC：使每次write都要等待物理I/O操作完成，包括有该write引起的文件属性更新所需的I/O
+O_TRUNC:如果文件存在，并且是常规文件而且以读写或者只写打开，则将其成都截断为0，如果文件是FIFO或终端设备文件，该标志被忽略，否则不明确
+O_DIRECTORY:如果pathname引用的不是目录，则出错
+
+读取文件
+#include <unistd.h>
+ssize_t read(int fd, void *buf, size_t count);
+失败 -1
+
+写入文件：
+#include <unistd.h>
+ssize_t write(int fd, const void *buf, size_t count);
+失败 -1
+
+关闭文件：
+#include <unistd.h>
+int close(int fd);

@@ -1,0 +1,101 @@
+【23种设计模式】
+UML模式：统一建模语言。可以清晰表达任何OOAD过程结果的图形化语言
+OOAD(Object Oriented Analysis and Design), 面对对象的分析与设计。
+可见性：
+'-' public
+'+' private
+'#' protected
+
+1.为了提高内聚和松耦合，我们经常抽象出一些类的公共接口形成抽象积累或者接口。这样我们就可以通过声明一个指向基类的指针来指向实际的子类实现，达到多态的目的。这里很容易出现一个问题n多的子类继承自抽象基类，我们不得不在每次要用子类的地方就编写诸如new XXX的代码。这里带来两个问题
+	1>客户程序员必须知道实际子类的名称(当系统复杂后，命名将成为一个很不好处理的问题，为了处理可能的名字冲突，有的命名可能并不是具有很好的可读性和记忆性)
+	2>程序的扩展性和维护变得越来越困难
+2.还有一种情况就是父类中并不知道具体要实例化哪一个具体的子类。这里的意思为：假设我们在类A中要使用到类B，B是一个抽象父类，在A中并不知道具体要实例化哪一个B的子类，但是在类A的子类D中是可以知道的。在A中我们没有办法直接使用类似于new XXX的语句，因为根本就不知道XXX是什么。
+
+以上两个问题也就引出了Factory模式的两个重要的功能：
+1.定义创建对象的接口，封装了对象的创建
+2.使得具体化类的工作延迟到了子类中
+
+Factory模式的实现比较简单，这里为了方便初学者，给出了原码：
+Product.h
+#ifndef _PRODUCT_H_ 
+#define _PRODUCT_H_
+class Product { 
+public: 
+    virtual ~Product() =0;
+protected: 
+    Product();
+private:
+};
+class ConcreteProduct:public Product 
+{ 
+public: 
+    ~ConcreteProduct();
+    ConcreteProduct(); 
+protected:
+
+private:
+};
+#endif //~_PRODUCT_H_
+
+Product.cpp
+#include "Product.h"
+#include<iostream> 
+using namespace std;
+Product::Product() { cout<<"Product...."<<endl; }
+Product::~Product() {
+    cout<<"~Product...."<<endl;
+}
+ConcreteProduct::ConcreteProduct() { cout<<"ConcreteProduct...."<<endl; }
+ConcreteProduct::~ConcreteProduct() {}
+
+Factory.h
+#ifndef _FACTORY_H_ 
+#define _FACTORY_H_
+class Product;
+class Factory { 
+public: 
+    virtual ~Factory() = 0;
+    virtual Product* CreateProduct() = 0;
+protected: 
+    Factory();
+private:
+};
+class ConcreteFactory:public Factory { 
+public:
+    ~ConcreteFactory();
+    ConcreteFactory();
+    Product* CreateProduct();
+protected:
+private:
+};
+#endif //~_FACTORY_H_
+
+Factory.cpp
+#include "Factory.h"
+#include "Product.h"
+#include <iostream> 
+using namespace std;
+Factory::Factory() {
+    cout<<"Factory....."<<endl;
+}
+Factory::~Factory() {
+    cout<<"~Factory....."<<endl;
+}
+ConcreteFactory::ConcreteFactory() { cout<<"ConcreteFactory....."<<endl; }
+ConcreteFactory::~ConcreteFactory() {
+}
+Product* ConcreteFactory::CreateProduct() { return new ConcreteProduct(); }
+
+main.cpp
+#include "Factory.h" 
+#include "Product.h"
+#include <iostream> 
+using namespace std;
+int main(int argc,char* argv[]) { 
+    Factory* fac = new ConcreteFactory();
+
+    Product* p = fac->CreateProduct();
+
+    return 0; 
+}
+示例代码中给出的Factory模式解决父类中并不知道具体要求实例化哪一个具体的子类的问题，至于为创建对象提供接口问题，可以由Factory中附加相应的创建操作Create***Product()即可
